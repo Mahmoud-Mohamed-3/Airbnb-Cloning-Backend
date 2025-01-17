@@ -17,8 +17,8 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   # File attachment validation for avatar
-  has_one_attached :avatar
-  validate :acceptable_avatar, if: -> { avatar.attached? }
+  has_one_attached :profile_image
+  validate :acceptable_profile_image, if: -> { profile_image.attached? }
 
   # Omniauth user creation method for Google OAuth2
   def self.from_omniauth(auth)
@@ -35,14 +35,14 @@ class User < ApplicationRecord
   private
 
   # Avatar size and type validation
-  def acceptable_avatar
-    unless avatar.byte_size <= 1.megabyte
+  def acceptable_profile_image
+    unless profile_image.byte_size <= 1.megabyte
       errors.add(:avatar, "is too big. Max size is 1MB.")
     end
 
     acceptable_types = [ "image/jpeg", "image/png", "image/jpg" ]
-    unless acceptable_types.include?(avatar.content_type)
-      errors.add(:avatar, "must be a JPEG, PNG, or JPG.")
+    unless acceptable_types.include?(profile_image.content_type)
+      errors.add(:profile_image, "must be a JPEG, PNG, or JPG.")
     end
   end
 end
