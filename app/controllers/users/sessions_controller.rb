@@ -52,7 +52,7 @@ class Users::SessionsController < Devise::SessionsController
       email = payload["email"]
       first_name = payload["given_name"]
       last_name = payload["family_name"]
-      avatar_url = payload["picture"]  # Fetch avatar URL from Google payload
+      profile_image_url = payload["picture"]  # Fetch avatar URL from Google payload
 
       # Find or create user
       user = User.find_or_initialize_by(email: email)
@@ -62,8 +62,8 @@ class Users::SessionsController < Devise::SessionsController
         user.password = Devise.friendly_token[0, 20] # Generate a random password
 
         # Attach avatar image if available from Google
-        if avatar_url.present?
-          user.avatar.attach(io: URI.open(avatar_url), filename: "#{email}_avatar.jpg", content_type: "image/jpeg")
+        if profile_image_url.present?
+          user.profile_image.attach(io: URI.open(profile_image_url), filename: "#{email}_image.jpg", content_type: "image/jpeg")
         end
 
         unless user.save
@@ -72,8 +72,8 @@ class Users::SessionsController < Devise::SessionsController
         end
       else
         # Attach avatar if available from Google and not already attached
-        if avatar_url.present? && !user.avatar.attached?
-          user.avatar.attach(io: URI.open(avatar_url), filename: "#{email}_avatar.jpg", content_type: "image/jpeg")
+        if profile_image_url.present? && !user.profile_image.attached?
+          user.profile_image.attach(io: URI.open(profile_image_url), filename: "#{email}_image.jpg", content_type: "image/jpeg")
         end
       end
 
@@ -92,7 +92,7 @@ class Users::SessionsController < Devise::SessionsController
       email: user.email,
       first_name: user.first_name,
       last_name: user.last_name,
-      avatar_url: user.avatar.attached? ? rails_blob_url(user.avatar, host: "http://localhost:3000") : nil
+      profile_image_url: user.profile_image.attached? ? rails_blob_url(user.profile_image, host: "http://localhost:3000") : nil
     }
   end
 end

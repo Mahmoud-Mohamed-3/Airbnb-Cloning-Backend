@@ -6,13 +6,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # Permit additional parameters for sign up
   def sign_up_params
-    params.require(:user).permit(:email, :password,  :avatar, :first_name, :last_name)
+    params.require(:user).permit(:email, :password,  :profile_image, :first_name, :last_name)
   end
 
   # Permit additional parameters for account update (if applicable)
-  def account_update_params
-    params.require(:user).permit(:email, :password, :current_password, :avatar, :first_name, :last_name)
-  end
+
 
   # Respond to different actions
   def respond_with(resource, _opts = {})
