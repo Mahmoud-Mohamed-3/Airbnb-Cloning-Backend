@@ -53,5 +53,5 @@ gem "rack-attack"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
 gem "dotenv-rails", groups: [ :development, :test ]
-gem 'devise-jwt'
+gem "devise-jwt"
 gem "devise", "~> 4.9"

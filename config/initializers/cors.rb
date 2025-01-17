@@ -7,12 +7,12 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'http://localhost:5173' # React frontend URL
+    origins "http://localhost:5173" # React frontend URL
 
-    resource '*',
+    resource "*",
       headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head],
-             expose:['access-token', 'expiry', 'token-type','Authorization'],
+      methods: [ :get, :post, :put, :patch, :delete, :options, :head ],
+             expose: [ "access-token", "expiry", "token-type", "Authorization" ],
       credentials: true
   end
 end
