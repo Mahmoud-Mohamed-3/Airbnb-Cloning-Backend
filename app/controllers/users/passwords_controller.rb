@@ -35,9 +35,9 @@ class Users::PasswordsController < Devise::PasswordsController
     @user = User.find_by(email: params[:user][:email])
     if @user.present?
       @user.send_reset_password_instructions
-      render json: { message:"Reset Password instructions sent to your email",status: 'ok' }
+      render json: { message: "Reset Password instructions sent to your email", status: "ok" }
     else
-      render json: { status: 'error', error: 'User not found' }
+      render json: { status: "error", error: "User not found" }
     end
   end
 
@@ -45,14 +45,13 @@ class Users::PasswordsController < Devise::PasswordsController
   def update
     @user = User.reset_password_by_token(reset_password_params)
     if @user.errors.empty?
-      render json: { message:"Password successfully updated",status: 'ok' }
+      render json: { message: "Password successfully updated", status: "ok" }
     else
-      render json: { status: 'error', error: @user.errors.full_messages }
+      render json: { status: "error", error: @user.errors.full_messages }
     end
   end
   private
   def reset_password_params
     params.require(:user).permit(:password, :password_confirmation, :reset_password_token)
   end
-
 end
