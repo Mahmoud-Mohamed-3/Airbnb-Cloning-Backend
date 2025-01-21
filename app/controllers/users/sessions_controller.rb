@@ -47,7 +47,7 @@ class Users::SessionsController < Devise::SessionsController
     # Validate the Google token
     validator = GoogleIDToken::Validator.new
     begin
-      payload = validator.check(token, ENV["GOOGLE_CLIENT_ID"])
+      payload = validator.check(token, "572508878231-ritv9flo5nbv3rsbr480f7ommvfkl8a3.apps.googleusercontent.com")
 
       email = payload["email"]
       first_name = payload["given_name"]
