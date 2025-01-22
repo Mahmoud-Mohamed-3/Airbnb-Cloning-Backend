@@ -18,6 +18,7 @@ class User < ApplicationRecord
 
   # File attachment validation for avatar
   has_many :properties, dependent: :destroy
+  has_many :reviews, dependent: :destroy
   has_one_attached :profile_image
   validate :acceptable_profile_image, if: -> { profile_image.attached? }
 

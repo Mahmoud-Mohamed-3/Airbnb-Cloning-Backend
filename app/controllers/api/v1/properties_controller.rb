@@ -2,7 +2,7 @@ class Api::V1::PropertiesController < ApplicationController
   before_action :authenticate_user!, only: [ :create ]
 
   def index
-    properties = Property.all
+    properties = Property.all.includes(:reviews) # Eager load reviews to avoid N+1 queries
     render json: properties, each_serializer: PropertySerializer
   end
 

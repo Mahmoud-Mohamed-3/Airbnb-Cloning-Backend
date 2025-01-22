@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  content: MyString
+  cleanliness_rating: 1
+  accurancy_rating: 1
+  check_in_rating: 1
+  final_rating: 1
+  user: one
+  property: one
+
+two:
+  content: MyString
+  cleanliness_rating: 1
+  accurancy_rating: 1
+  check_in_rating: 1
+  final_rating: 1
+  user: two
+  property: two

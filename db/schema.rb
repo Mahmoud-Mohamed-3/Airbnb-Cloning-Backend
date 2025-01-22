@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_21_203540) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_22_031035) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -47,9 +47,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_21_203540) do
     t.datetime "updated_at", null: false
     t.string "city", null: false
     t.string "country", null: false
-    t.string "price", null: false
     t.string "duration", null: false
+    t.decimal "price", precision: 10, scale: 2
+    t.float "property_rate"
     t.index ["user_id"], name: "index_properties_on_user_id"
+  end
+
+  create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "content", null: false
+    t.float "cleanliness_rating", null: false
+    t.float "accurancy_rating", null: false
+    t.float "check_in_rating", null: false
+    t.float "final_rating", null: false
+    t.bigint "user_id", null: false
+    t.bigint "property_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.float "value_rating", null: false
+    t.float "communication_rating", null: false
+    t.float "location_rating", null: false
+    t.index ["property_id"], name: "index_reviews_on_property_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -75,4 +93,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_21_203540) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "properties", "users"
+  add_foreign_key "reviews", "properties"
+  add_foreign_key "reviews", "users"
 end

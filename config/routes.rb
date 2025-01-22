@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       # Route for requesting a password reset (POST)
       # resources :passwords, only: [:create, :update]
       resources :properties
+      resources :reviews
       # Get the current logged-in user
       get "current_user", to: "users#get_current_user"
       # Referring to Api::V1::ConfirmationsController
