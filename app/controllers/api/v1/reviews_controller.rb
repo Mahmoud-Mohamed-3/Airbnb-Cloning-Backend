@@ -11,8 +11,7 @@ class Api::V1::ReviewsController < ApplicationController
       @review = current_user.reviews.build(review_params)
       @review.final_rating = (@review.cleanliness_rating + @review.accurancy_rating + @review.check_in_rating + @review.value_rating + @review.communication_rating + @review.location_rating) / 6
       if @review.save
-        render json: @review
-        # , serializer: ReviewSerializer, status: :created
+        render json: @review, serializer: ReviewSerializer, status: :created
       else
         render json: @review.errors, status: :unprocessable_entity
       end

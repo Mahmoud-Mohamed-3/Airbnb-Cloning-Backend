@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       # resources :passwords, only: [:create, :update]
       resources :properties
       resources :reviews
+      resources :wishlists, only: [ :create, :destroy, :index ]
       # Get the current logged-in user
       get "current_user", to: "users#get_current_user"
       # Referring to Api::V1::ConfirmationsController

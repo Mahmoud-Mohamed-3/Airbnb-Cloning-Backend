@@ -20,6 +20,11 @@ class User < ApplicationRecord
   has_many :properties, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_one_attached :profile_image
+  has_many :wishlists, dependent: :destroy
+  has_many :whishlisted_properties, through: :wishlists, source: :property
+
+
+
   validate :acceptable_profile_image, if: -> { profile_image.attached? }
 
   # Omniauth user creation method for Google OAuth2

@@ -2,6 +2,8 @@ class Property < ApplicationRecord
   belongs_to :user
   has_many :reviews, dependent: :destroy
   has_many_attached :images
+  has_many :wishlists, dependent: :destroy
+  has_many :whishlisted_users, through: :wishlists, source: :user
 
   # Validations
   validates :description, presence: true
@@ -62,7 +64,7 @@ class Property < ApplicationRecord
         errors.add(:images, "is too big. Max size is 3MB.")
       end
 
-      acceptable_types = ["image/jpeg", "image/png", "image/jpg", "image/avif"]
+      acceptable_types = [ "image/jpeg", "image/png", "image/jpg", "image/avif" ]
       unless acceptable_types.include?(image.content_type)
         errors.add(:images, "must be a JPEG, PNG, or JPG.")
       end
