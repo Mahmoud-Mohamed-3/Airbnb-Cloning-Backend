@@ -14,7 +14,7 @@ class Property < ApplicationRecord
         errors.add(:images, "is too big. Max size is 3MB.")
       end
 
-      acceptable_types = [ "image/jpeg", "image/png", "image/jpg" ,"image/avif"]
+      acceptable_types = [ "image/jpeg", "image/png", "image/jpg", "image/avif" ]
       unless acceptable_types.include?(image.content_type)
         errors.add(:images, "must be a JPEG, PNG, or JPG.")
       end
