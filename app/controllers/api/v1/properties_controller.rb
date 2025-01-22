@@ -1,5 +1,5 @@
 class Api::V1::PropertiesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user! ,only: [:create]
 
   def index
     properties = Property.all
