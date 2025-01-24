@@ -17,13 +17,17 @@ class User < ApplicationRecord
   validates :last_name, presence: true
 
   # File attachment validation for avatar
-  has_many :properties, dependent: :destroy
+  # has_many :properties, dependent: :destroy
   has_many :reviews, dependent: :destroy
   has_one_attached :profile_image
   has_many :wishlists, dependent: :destroy
   has_many :whishlisted_properties, through: :wishlists, source: :property
 
+  has_many :properties, foreign_key: "user_id", dependent: :destroy
 
+  # A user can make many reservations
+  has_many :reservations, foreign_key: "user_id"
+  has_many :reserved_properties, through: :reservations, source: :property
 
   validate :acceptable_profile_image, if: -> { profile_image.attached? }
 

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
+<table align="center" width="600" style="background-color: #ffffff; margin: 20px auto; border-collapse: collapse; border: 1px solid #dddddd;">
+  <tr>
+    <td style="padding: 20px;">
+      <h1 style="color: #333333; font-size: 24px; margin-bottom: 20px;">
+        Reservation Request Submitted
+      </h1>
+      <p style="color: #555555; font-size: 16px; line-height: 1.6;">
+        Your reservation request for
+        <strong style="color: #000000;">
+          <%= @reservation.property.city %> - <%= @reservation.property.country %>
+        </strong> has been submitted.
+      </p>
+      <p style="color: #555555; font-size: 16px; line-height: 1.6;">
+        Check-in: <span style="color: #000000;"><%= @reservation.property.start_date %></span><br>
+        Check-out: <span style="color: #000000;"><%= @reservation.property.end_date %></span>
+      </p>
+      <p style="color: #555555; font-size: 16px; line-height: 1.6;">
+        You will be notified once the property owner approves or rejects your request.
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td style="background-color: #f8f9fa; padding: 15px; text-align: center;">
+      <footer>
+        <p style="color: #777777; font-size: 14px; margin: 0;">
+          If you have any questions, feel free to contact us at
+          <a href="mailto:mahmoudfalous@gmail.com" style="color: #007BFF; text-decoration: none;">mahmoudfalous@gmail.com</a>.
+        </p>
+      </footer>
+    </td>
+  </tr>
+</table>
+</body>
+</html>

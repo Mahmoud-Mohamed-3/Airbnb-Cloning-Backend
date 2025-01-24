@@ -15,7 +15,11 @@ Rails.application.routes.draw do
     namespace :v1 do
       # Route for requesting a password reset (POST)
       # resources :passwords, only: [:create, :update]
-      resources :properties
+      resources :properties do
+      resources :reservations, only: [ :create ]
+    end
+
+    post "reservations/:id/update_status", to: "reservations#update_status"
       resources :reviews
       resources :wishlists, only: [ :create, :destroy, :index ]
       # Get the current logged-in user

@@ -39,6 +39,27 @@ class Users::SessionsController < Devise::SessionsController
       render json: { message: "Couldn't find an active session." }, status: :unauthorized
     end
   end
+  # def respond_to_on_destroy
+  #   if request.headers['Authorization'].present?
+  #     secret_key = Rails.application.credentials.devise_jwt_secret_key!
+  #     jwt_payload = JWT.decode(
+  #       request.headers['Authorization'].split(' ').last,
+  #       secret_key,
+  #       true,
+  #       { algorithm: 'HS256' }
+  #     ).first
+  #
+  #     current_user = User.find(jwt_payload['sub'])
+  #     if current_user
+  #       sign_out(current_user)
+  #       render json: { message: "Logged out successfully" }, status: :ok
+  #     else
+  #       render json: { message: "Couldn't find an active session." }, status: :unauthorized
+  #     end
+  #   else
+  #     render json: { message: "No authorization token provided." }, status: :unauthorized
+  #   end
+  # end
 
   # Handle Google Sign-In
   def handle_google_sign_in

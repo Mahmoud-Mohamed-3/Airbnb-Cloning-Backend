@@ -1,5 +1,10 @@
 class Property < ApplicationRecord
-  belongs_to :user
+   # belongs_to :user
+   belongs_to :user
+
+    # A property can have many reservations
+    has_many :reservations
+    has_many :guests, through: :reservations, source: :user
   has_many :reviews, dependent: :destroy
   has_many_attached :images
   has_many :wishlists, dependent: :destroy
@@ -52,7 +57,10 @@ class Property < ApplicationRecord
     return 0 if reviews.empty?
     reviews.average(:location_rating).to_f.round(1)
   end
-
+  def wishlisted_by?(user = nil)
+    return false unless user
+    whishlisted_users.include?(user)
+  end
   private
 
   # Custom validation: Ensure images are acceptable
