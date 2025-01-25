@@ -57,7 +57,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_201149) do
     t.float "ave_location", default: 0.0, null: false
     t.datetime "start_date"
     t.datetime "end_date"
-    t.string "type", null: false
+    t.string "type_of_property", null: false
     t.string "place", null: false
     t.integer "max_guests", null: false
     t.integer "bedrooms", null: false

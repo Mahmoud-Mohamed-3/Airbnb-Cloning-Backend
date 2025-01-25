@@ -8,9 +8,13 @@ class Api::V1::PropertiesController < ApplicationController
       properties = properties.where.not(user_id: current_user.id)
     end
 
-    render json: properties, each_serializer: PropertySerializer
-  end
 
+    render json: properties, each_serializer: PropertySerializer ,action: :index
+  end
+  def show
+    property = Property.find(params[:id])
+    render json: property, serializer: PropertySerializer , action: :show
+  end
   def create
     unless current_user
       return render json: { error: "You must be logged in to create a property" }, status: :unauthorized
@@ -29,6 +33,6 @@ class Api::V1::PropertiesController < ApplicationController
   private
 
   def property_params
-    params.require(:property).permit(:city, :country, :price, :start_date, :end_date, :description, :type, :place, :max_guests, :beds, :bedrooms, :baths, images: [])
+    params.require(:property).permit(:city, :country, :price, :start_date, :end_date, :description, :type_of_property, :place, :max_guests, :beds, :bedrooms, :baths, images: [])
   end
 end

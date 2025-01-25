@@ -7,4 +7,9 @@ class Api::V1::UsersController < ApplicationController
       render json: { message: "User not found" }, status: :not_found
     end
   end
+  def get_user_wishlisted_properties
+    user = User.find(params[:id])
+    properties = user.whishlisted_properties
+    render json: properties, each_serializer: PropertySerializer, action: :index
+  end
 end

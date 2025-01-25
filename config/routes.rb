@@ -24,6 +24,8 @@ Rails.application.routes.draw do
       resources :wishlists, only: [ :create, :destroy, :index ]
       # Get the current logged-in user
       get "current_user", to: "users#get_current_user"
+      # Get the properties wishlisted by a user
+      get "users/:id/wishlisted_properties", to: "users#get_user_wishlisted_properties"
       # Referring to Api::V1::ConfirmationsController
     end
   end
