@@ -9,11 +9,11 @@ class Api::V1::PropertiesController < ApplicationController
     end
 
 
-    render json: properties, each_serializer: PropertySerializer ,action: :index
+    render json: properties, each_serializer: PropertySerializer, action: :index
   end
   def show
     property = Property.find(params[:id])
-    render json: property, serializer: PropertySerializer , action: :show
+    render json: property, serializer: PropertySerializer, action: :show
   end
   def create
     unless current_user
