@@ -1,13 +1,13 @@
 class PropertySerializer < ActiveModel::Serializer
   # attributes :id, :city, :country, :price, :start_date, :end_date, :description, :owner, :images, :property_rate, :ave_cleanliness, :ave_accurancy, :ave_check_in, :ave_value, :ave_communication, :ave_location, :user_id , :type, :place, :max_guests, :beds, :bedrooms, :baths
 
-  attributes :id, :city, :country, :price, :start_date, :end_date, :description, :owner, :images, :property_rate, :ave_cleanliness, :ave_accurancy, :ave_check_in, :ave_value, :ave_communication, :ave_location, :user_id, :type_of_property, :place, :max_guests, :beds, :bedrooms, :baths
+  attributes :id, :city, :country, :price, :start_date, :end_date, :description, :owner, :images, :property_rate, :ave_cleanliness, :ave_accurancy, :ave_check_in, :ave_value, :ave_communication, :ave_location, :user_id, :type_of_property, :place, :max_guests, :beds, :bedrooms, :baths, :num_of_reviews
 
   def attributes(*args)
     hash = super
     # Exclude certain attributes for the index action
     if instance_options[:action] == :index
-      hash.except!(:description,    :ave_cleanliness, :ave_accurancy, :ave_check_in, :ave_value, :ave_communication, :ave_location,  :type, :place, :max_guests,  :bedrooms, :baths)
+      hash.except!(:description,    :ave_cleanliness, :ave_accurancy, :ave_check_in, :ave_value, :ave_communication, :ave_location,  :type, :place, :max_guests,  :bedrooms, :baths, :num_of_reviews)
     end
     hash
   end
@@ -33,7 +33,9 @@ class PropertySerializer < ActiveModel::Serializer
     object.ave_location
   end
 
-
+  def num_of_reviews
+    object.num_of_reviews
+  end
   def images
     object.images.map { |image| Rails.application.routes.url_helpers.rails_blob_url(image, host: "http://localhost:3000") }
   end

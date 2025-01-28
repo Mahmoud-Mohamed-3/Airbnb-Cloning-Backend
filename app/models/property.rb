@@ -37,6 +37,9 @@ class Property < ApplicationRecord
     return 0 if reviews.empty?
     reviews.average(:accurancy_rating).to_f.round(1)
   end
+   def num_of_reviews
+    reviews.count
+   end
 
   def ave_check_in
     return 0 if reviews.empty?

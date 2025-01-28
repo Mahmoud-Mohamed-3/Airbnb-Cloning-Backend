@@ -8,7 +8,7 @@ class Api::V1::PropertiesController < ApplicationController
       properties = properties.where.not(user_id: current_user.id)
     end
 
-
+    properties=properties.reject { |property| property.end_date < Date.today }
     render json: properties, each_serializer: PropertySerializer, action: :index
   end
   def show

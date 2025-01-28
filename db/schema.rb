@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_24_201149) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_27_234532) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -63,6 +63,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_24_201149) do
     t.integer "bedrooms", null: false
     t.integer "beds", null: false
     t.integer "baths", null: false
+    t.integer "num_of_reviews", default: 0
     t.index ["user_id"], name: "index_properties_on_user_id"
   end
 
