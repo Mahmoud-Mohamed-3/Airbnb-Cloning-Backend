@@ -69,7 +69,10 @@ class Property < ApplicationRecord
   # Custom validation: Ensure images are acceptable
   def acceptable_images
     return unless images.attached?
-
+    # add a limit of 5 images
+    if images.length > 5
+      errors.add(:images, "You can only upload a maximum of 5 images.")
+    end
     images.each do |image|
       unless image.byte_size <= 3.megabyte
         errors.add(:images, "is too big. Max size is 3MB.")

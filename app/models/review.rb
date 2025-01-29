@@ -9,4 +9,8 @@ class Review < ApplicationRecord
   validates :communication_rating, presence: true, numericality: {  greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   validates :location_rating, presence: true, numericality: {  greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
   validates :final_rating, presence: true, numericality: {  greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }
+
+  def review_writer
+    render json: user, serializer: UserSerializer
+  end
 end

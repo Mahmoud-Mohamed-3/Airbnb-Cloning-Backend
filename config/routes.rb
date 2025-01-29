@@ -22,10 +22,14 @@ Rails.application.routes.draw do
     post "reservations/:id/update_status", to: "reservations#update_status"
       get "reservations/owner_reservations", to: "reservations#owner_reservations"
       get "users/:id/owner", to: "users#get_owner_of_property"
+      get "properties/:id/reviews", to: "reviews#get_property_reviews"
       resources :reviews
       resources :wishlists, only: [ :create, :destroy, :index ]
       # Get the current logged-in user
       get "current_user", to: "users#get_current_user"
+
+      # Get the information of a user
+      get "users/:id", to: "users#show_user_info"
       # Get the properties wishlisted by a user
       get "users/:id/wishlisted_properties", to: "users#get_user_wishlisted_properties"
       # Referring to Api::V1::ConfirmationsController

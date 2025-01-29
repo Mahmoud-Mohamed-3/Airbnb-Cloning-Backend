@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_27_234532) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_28_234012) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -78,7 +78,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_27_234532) do
   end
 
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "content", null: false
+    t.text "content", null: false
     t.float "cleanliness_rating", null: false
     t.float "accurancy_rating", null: false
     t.float "check_in_rating", null: false

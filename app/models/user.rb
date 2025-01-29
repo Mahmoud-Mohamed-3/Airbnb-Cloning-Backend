@@ -31,6 +31,25 @@ class User < ApplicationRecord
 
   validate :acceptable_profile_image, if: -> { profile_image.attached? }
 
+  def user_whishlisted_properties
+    wishlists.map { |wishlist| wishlist.property }
+  end
+  def user_reviews
+    reviews.map { |review| review.property }
+  end
+  def user_reservations
+    reservations.map { |reservation| reservation.property }
+  end
+  def user_properties
+    properties.map { |property| property }
+  end
+  def user_received_reviews
+    properties.map { |property| property.reviews }
+  end
+  def user_received_reservations
+    properties.map { |property| property.reservations }
+  end
+
   # Omniauth user creation method for Google OAuth2
   def self.from_omniauth(auth)
     user = find_or_initialize_by(email: auth.info.email)

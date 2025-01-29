@@ -18,6 +18,12 @@ class Api::V1::ReviewsController < ApplicationController
     end
   end
 
+  def get_property_reviews
+    property = Property.find(params[:id])
+    reviews = property.reviews
+    render json: reviews, each_serializer: ReviewSerializer
+  end
+
   private
 
   def review_params
