@@ -8,5 +8,4 @@ class ReviewSerializer < ActiveModel::Serializer
   def review_writer
     object.user
   end
-  def
 end
