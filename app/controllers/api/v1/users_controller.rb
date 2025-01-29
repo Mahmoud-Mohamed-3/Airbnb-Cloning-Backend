@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_user!, only: [ :get_current_user, :get_user_wishlisted_properties , :show_user_info ]
+  before_action :authenticate_user!, only: [ :get_current_user, :get_user_wishlisted_properties, :show_user_info ]
   def get_current_user
     if current_user
       render json: current_user

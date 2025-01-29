@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :first_name, :last_name, :email, :profile_image_url , :user_whishlisted_properties, :user_reservations, :user_reviews, :user_properties, :user_received_reviews, :user_received_reservations
+  attributes :id, :first_name, :last_name, :email, :profile_image_url, :user_whishlisted_properties, :user_reservations, :user_reviews, :user_properties, :user_received_reviews, :user_received_reservations
 
 
   def user_whishlisted_properties
@@ -16,11 +16,9 @@ class UserSerializer < ActiveModel::Serializer
   end
   def user_received_reviews
     object.user_received_reviews
-
   end
   def user_received_reservations
     object.user_received_reservations
-
   end
   def profile_image_url
     if object.profile_image.attached?
