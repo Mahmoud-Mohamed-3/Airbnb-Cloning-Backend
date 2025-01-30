@@ -1,36 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Reservation Request</title>
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+          color: #555555;
+      }
+      table {
+          width: 100%;
+          max-width: 600px;
+          margin: 20px auto;
+          background-color: #ffffff;
+          border-collapse: collapse;
+          border: 1px solid #dddddd;
+          border-radius: 8px;
+      }
+      td {
+          padding: 20px;
+      }
+      h1 {
+          color: #333333;
+          font-size: 24px;
+          margin-bottom: 20px;
+      }
+      p {
+          font-size: 16px;
+          line-height: 1.6;
+          margin: 10px 0;
+      }
+      strong {
+          color: #000000;
+      }
+      .cta-button {
+          display: inline-block;
+          padding: 10px 20px;
+          background-color: #007BFF;
+          color: #ffffff;
+          text-decoration: none;
+          border-radius: 4px;
+          font-weight: bold;
+          text-align: center;
+          margin-top: 15px;
+      }
+      footer {
+          background-color: #f8f9fa;
+          padding: 15px;
+          text-align: center;
+      }
+      footer p {
+          color: #777777;
+          font-size: 14px;
+          margin: 0;
+      }
+  </style>
 </head>
-<body style="font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 0;">
-<table align="center" width="600" style="background-color: #ffffff; margin: 20px auto; border-collapse: collapse; border: 1px solid #dddddd;">
+<body>
+<table>
   <tr>
-    <td style="padding: 20px;">
-      <h1 style="color: #333333; font-size: 24px; margin-bottom: 20px;">New Reservation Request</h1>
-      <p style="color: #555555; font-size: 16px; line-height: 1.6;">
-        You have a new reservation request for your property:
-        <strong style="color: #000000;"><%= @reservation.property.city %></strong>.
+    <td>
+      <h1>New Reservation Request</h1>
+      <p>You have a new reservation request for your property in <strong><%= @reservation.property.city %></strong>.</p>
+      <p><strong>Guest:</strong> <%= @reservation.user.email %></p>
+      <p><strong>Total Price:</strong> <%= @reservation.total_price %></p>
+      <p><strong>Check-in:</strong> <%= @reservation.start_date %></p>
+      <p><strong>Check-out:</strong> <%= @reservation.end_date %></p>
+
+      <p>
+        To approve or reject the reservation, click the button below:
       </p>
-      <p style="color: #555555; font-size: 16px; line-height: 1.6;">
-        Guest: <span style="color: #000000;"><%= @reservation.user.email %></span>
-      </p>
-      <p style="color: #555555; font-size: 16px; line-height: 1.6;">
-        Check-in: <span style="color: #000000;"><%= @reservation.property.start_date %></span><br>
-        Check-out: <span style="color: #000000;"><%= @reservation.property.end_date %></span>
-      </p>
-      <p style="color: #555555; font-size: 16px; line-height: 1.6;">
-        To approve or reject the reservation, click
-        <a href="http://localhost:5173/login" style="color: #007BFF; text-decoration: none;">here</a>.
-      </p>
+      <a href="http://localhost:5173/login" class="cta-button">Approve/Reject Reservation</a>
     </td>
   </tr>
   <tr>
-    <td style="background-color: #f8f9fa; padding: 15px; text-align: center;">
+    <td>
       <footer>
-        <p style="color: #777777; font-size: 14px; margin: 0;">
-          Thank you for using our service! <strong style="color: #333333;">MaNo</strong>
-        </p>
+        <p>Thank you for using our service! <strong>MaNo</strong></p>
       </footer>
     </td>
   </tr>

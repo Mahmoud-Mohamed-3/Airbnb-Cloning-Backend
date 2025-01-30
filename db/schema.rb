@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_28_234012) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_29_225822) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -73,6 +73,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_28_234012) do
     t.string "status", default: "pending"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.decimal "total_price", precision: 10, scale: 2
     t.index ["property_id"], name: "fk_rails_0e95ce621b"
     t.index ["user_id"], name: "fk_rails_48a92fce51"
   end
