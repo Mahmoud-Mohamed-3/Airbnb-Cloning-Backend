@@ -11,6 +11,8 @@ class PropertySerializer < ActiveModel::Serializer
     end
     hash
   end
+
+  belongs_to :user, if: -> { instance_options[:include_user] }
   def property_rate
     object.property_rating
   end

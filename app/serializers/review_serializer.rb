@@ -6,6 +6,12 @@ class ReviewSerializer < ActiveModel::Serializer
   end
 
   def review_writer
-    object.user
+    full_name = "#{object.user.first_name} #{object.user.last_name}"
+    profile_image_url = object.user.profile_image.attached? ? Rails.application.routes.url_helpers.rails_blob_url(object.user.profile_image):nil
+
+    {
+      full_name: full_name,
+      profile_image_url: profile_image_url
+    }
   end
 end

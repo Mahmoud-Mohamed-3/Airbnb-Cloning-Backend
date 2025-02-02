@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable, :omniauthable
   include Devise::JWT::RevocationStrategies::JTIMatcher
-
+  include Rails.application.routes.url_helpers
   devise :database_authenticatable,
          :registerable,
          :confirmable,
@@ -28,27 +28,63 @@ class User < ApplicationRecord
   # A user can make many reservations
   has_many :reservations, foreign_key: "user_id"
   has_many :reserved_properties, through: :reservations, source: :property
-
+  has_many :received_reservations, through: :properties, source: :reservations
   validate :acceptable_profile_image, if: -> { profile_image.attached? }
 
   def user_whishlisted_properties
-    wishlists.map { |wishlist| wishlist.property }
+    wishlists.includes(property: { images_attachments: :blob }).map do |wishlist|
+      PropertySerializer.new(wishlist.property).as_json
+    end
   end
+
+  def user_reservations
+    reservations.includes(:property).map do |reservation|
+      {
+        reservation: reservation.as_json(except: [ :user_id, :property_id ]),
+        property: PropertySerializer.new(reservation.property).as_json,
+        # images: reservation.property.images,
+        user_profile: reservation.user.first_name
+      }
+    end
+  end
+
   def user_reviews
     reviews.map { |review| review.property }
   end
-  def user_reservations
-    reservations.map { |reservation| reservation.property }
-  end
+
   def user_properties
     properties.map { |property| property }
   end
   def user_received_reviews
     properties.map { |property| property.reviews }
   end
+
+
   def user_received_reservations
-    properties.map { |property| property.reservations }
+    properties.map do |property|
+      property.reservations
+              .where(status: "pending")
+              .includes(:user) # Ensure the user is loaded for each reservation
+              .map do |reservation|
+        {
+          id: reservation.id,
+          user_id: reservation.user_id,
+          property_id: reservation.property_id,
+          status: reservation.status,
+          start_date: reservation.start_date,
+          end_date: reservation.end_date,
+          total_price: reservation.total_price,
+          user_first_name: reservation.user.first_name,
+          user_last_name: reservation.user.last_name,
+          user_email: reservation.user.email,
+          city: reservation.property.city,
+          country: reservation.property.country,
+          user_profile_image: reservation.user.profile_image.attached? ? url_for(reservation.user.profile_image) : nil # Generate URL only if image is attached
+        }
+      end
+      end.flatten!
   end
+
 
   # Omniauth user creation method for Google OAuth2
   def self.from_omniauth(auth)

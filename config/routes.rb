@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       get "reservations/owner_reservations", to: "reservations#owner_reservations"
       get "users/:id/owner", to: "users#get_owner_of_property"
       get "properties/:id/reviews", to: "reviews#get_property_reviews"
+      post "users/:id/update_profile", to: "users#update_user"
       resources :reviews
       resources :wishlists, only: [ :create, :destroy, :index ]
       # Get the current logged-in user
