@@ -15,20 +15,16 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
-
-  # File attachment validation for avatar
-  # has_many :properties, dependent: :destroy
   has_many :reviews, dependent: :destroy
-  has_one_attached :profile_image
+  has_one_attached :profile_image, dependent: :destroy
   has_many :wishlists, dependent: :destroy
-  has_many :whishlisted_properties, through: :wishlists, source: :property
+  has_many :whishlisted_properties, through: :wishlists, source: :property, dependent: :destroy
 
   has_many :properties, foreign_key: "user_id", dependent: :destroy
 
-  # A user can make many reservations
-  has_many :reservations, foreign_key: "user_id"
-  has_many :reserved_properties, through: :reservations, source: :property
-  has_many :received_reservations, through: :properties, source: :reservations
+  has_many :reservations, foreign_key: "user_id", dependent: :destroy
+  has_many :reserved_properties, through: :reservations, source: :property, dependent: :destroy
+  has_many :received_reservations, through: :properties, source: :reservations, dependent: :destroy
   validate :acceptable_profile_image, if: -> { profile_image.attached? }
 
   def user_whishlisted_properties
@@ -42,7 +38,6 @@ class User < ApplicationRecord
       {
         reservation: reservation.as_json(except: [ :user_id, :property_id ]),
         property: PropertySerializer.new(reservation.property).as_json,
-        # images: reservation.property.images,
         user_profile: reservation.user.first_name
       }
     end
@@ -53,8 +48,26 @@ class User < ApplicationRecord
   end
 
   def user_properties
-    properties.map { |property| property }
+    properties.includes(:reviews, reservations: :user).map do |property|
+      {
+        property: PropertySerializer.new(property).as_json,
+        reviews: property.reviews.map { |review| ReviewSerializer.new(review).as_json },
+        reservations: {
+          number_of_reservations: property.reservations.count,
+
+          users: property.reservations.map do |reservation|
+            {
+              user_first_name: reservation.user.first_name,
+              user_last_name: reservation.user.last_name,
+              user_profile_image: reservation.user.profile_image.attached? ? Rails.application.routes.url_helpers.rails_blob_url(reservation.user.profile_image, host: "http://localhost:3000") : nil,
+              status: reservation.status
+            }
+          end
+        }
+      }
+    end
   end
+
   def user_received_reviews
     properties.map { |property| property.reviews }
   end
@@ -64,7 +77,7 @@ class User < ApplicationRecord
     properties.map do |property|
       property.reservations
               .where(status: "pending")
-              .includes(:user) # Ensure the user is loaded for each reservation
+              .includes(:user)
               .map do |reservation|
         {
           id: reservation.id,
@@ -86,7 +99,6 @@ class User < ApplicationRecord
   end
 
 
-  # Omniauth user creation method for Google OAuth2
   def self.from_omniauth(auth)
     user = find_or_initialize_by(email: auth.info.email)
     user.first_name ||= auth.info.first_name
@@ -96,11 +108,9 @@ class User < ApplicationRecord
     user
   end
 
-  # validates :google_id, uniqueness: true, allow_nil: true
 
   private
 
-  # Avatar size and type validation
   def acceptable_profile_image
     unless profile_image.byte_size <= 1.megabyte
       errors.add(:avatar, "is too big. Max size is 1MB.")

@@ -2,15 +2,15 @@ class Property < ApplicationRecord
    # belongs_to :user
    belongs_to :user
 
-    # A property can have many reservations
     has_many :reservations
     has_many :guests, through: :reservations, source: :user
   has_many :reviews, dependent: :destroy
-  has_many_attached :images
+  has_many_attached :images, dependent: :destroy
   has_many :wishlists, dependent: :destroy
-  has_many :whishlisted_users, through: :wishlists, source: :user
+  has_many :whishlisted_users, through: :wishlists, source: :user, dependent: :destroy
 
-  # Validations
+
+
   validates :description, presence: true
   validates :city, presence: true
   validates :country, presence: true
@@ -22,7 +22,6 @@ class Property < ApplicationRecord
   validate :start_date_not_in_past, on: :create
   validate :end_date_after_start_date, on: :create
 
-  # Methods for calculating average ratings
   def property_rating
     return 0 if reviews.empty?
     reviews.average(:final_rating).to_f.round(1)
@@ -32,7 +31,6 @@ class Property < ApplicationRecord
     return 0 if reviews.empty?
     reviews.average(:cleanliness_rating).to_f.round(1)
   end
-
   def ave_accurancy
     return 0 if reviews.empty?
     reviews.average(:accurancy_rating).to_f.round(1)
@@ -66,10 +64,8 @@ class Property < ApplicationRecord
   end
   private
 
-  # Custom validation: Ensure images are acceptable
   def acceptable_images
     return unless images.attached?
-    # add a limit of 5 images
     if images.length > 5
       errors.add(:images, "You can only upload a maximum of 5 images.")
     end
@@ -85,7 +81,6 @@ class Property < ApplicationRecord
     end
   end
 
-  # Custom validation: Ensure start_date is before end_date
   def start_date_before_end_date
     return if start_date.blank? || end_date.blank?
 
@@ -94,7 +89,6 @@ class Property < ApplicationRecord
     end
   end
 
-  # Custom validation: Ensure start_date is not in the past
   def start_date_not_in_past
     return if start_date.blank?
 
@@ -103,7 +97,6 @@ class Property < ApplicationRecord
     end
   end
 
-  # Custom validation: Ensure end_date is after start_date
   def end_date_after_start_date
     return if start_date.blank? || end_date.blank?
 

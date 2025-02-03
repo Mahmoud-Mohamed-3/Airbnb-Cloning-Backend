@@ -33,8 +33,11 @@ class Api::V1::UsersController < ApplicationController
   def get_owner_of_property
     property = Property.find(params[:id])
     owner = property.user
-    render json: owner, serializer: UserSerializer
+    first_name = owner.first_name
+    profile_image_url = owner.profile_image.attached? ? Rails.application.routes.url_helpers.rails_blob_url(owner.profile_image) : nil
+    render json: { first_name: first_name, profile_image_url: profile_image_url }
   end
+
   def get_user_wishlisted_properties
     user = User.find(params[:id])
     properties = user.whishlisted_properties
