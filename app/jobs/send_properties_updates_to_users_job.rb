@@ -9,6 +9,6 @@ class SendPropertiesUpdatesToUsersJob
     target_properties = Property.find(properties["id"])
     property_owner = target_properties.user_id
     target_property_owner = User.find(property_owner)
-    UserMailer.with(user: user, property: target_properties , owner: target_property_owner).send_updates.deliver_now
+    UserMailer.with(user: user, property: target_properties, owner: target_property_owner).send_updates.deliver_now
   end
 end

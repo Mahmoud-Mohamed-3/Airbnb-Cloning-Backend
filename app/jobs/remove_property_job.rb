@@ -1,4 +1,4 @@
-require 'sidekiq'
+require "sidekiq"
 
 class RemovePropertyJob
   include Sidekiq::Job

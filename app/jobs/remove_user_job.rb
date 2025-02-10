@@ -1,4 +1,4 @@
-require 'sidekiq'
+require "sidekiq"
 
 class RemoveUserJob
   include Sidekiq::Job

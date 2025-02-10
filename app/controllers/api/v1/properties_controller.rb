@@ -36,7 +36,6 @@ class Api::V1::PropertiesController < ApplicationController
     property = Property.find(params[:id])
     prop = property.to_json
     RemovePropertyJob.perform_async(prop)
-
   end
 
   def update
