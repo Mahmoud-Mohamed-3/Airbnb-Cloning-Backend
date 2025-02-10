@@ -9,6 +9,7 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+  config.api_only = false
 
   # In config/environments/development.rb (or production.rb)
   Rails.application.routes.default_url_options[:host] = "localhost:3000"

@@ -1,5 +1,6 @@
 source "https://rubygems.org"
-
+gem "sidekiq"
+gem "redis"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 8.0.1"
 # Use mysql as the database for Active Record

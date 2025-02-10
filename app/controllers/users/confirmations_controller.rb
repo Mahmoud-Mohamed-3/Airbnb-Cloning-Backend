@@ -14,16 +14,17 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     confirmation_params = params.require(:confirmation).permit(:token)
 
     # Send confirmation instructions to the resource
-    self.resource = resource_class.send_confirmation_instructions(confirmation_params)
-    yield resource if block_given?
-
-    if successfully_sent?(resource)
-      respond_with({}, location: after_resending_confirmation_instructions_path_for(resource_name))
-    else
-      # Log any errors for troubleshooting
-      Rails.logger.error("Confirmation errors: #{resource.errors.full_messages.join(', ')}") if resource.errors.any?
-      respond_with(resource)
-    end
+    SendConfirmationMailJob.perform_async(confirmation_params[:token])
+    # self.resource = resource_class.send_confirmation_instructions(confirmation_params)
+    # yield resource if block_given?
+    #
+    # if successfully_sent?(resource)
+    #   respond_with({}, location: after_resending_confirmation_instructions_path_for(resource_name))
+    # else
+    #   # Log any errors for troubleshooting
+    #   Rails.logger.error("Confirmation errors: #{resource.errors.full_messages.join(', ')}") if resource.errors.any?
+    #   respond_with(resource)
+    # end
   end
 
   # GET /resource/confirmation?confirmation_token=abcdef

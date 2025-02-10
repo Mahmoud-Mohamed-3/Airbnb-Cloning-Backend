@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          margin: 0;
+          padding: 0;
+      }
+      .container {
+          width: 600px;
+          background-color: #ffffff;
+          margin: 20px auto;
+          border-collapse: collapse;
+          border: 1px solid #dddddd;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+          color: #333333;
+          font-size: 24px;
+          margin-bottom: 20px;
+      }
+      p {
+          color: #555555;
+          font-size: 16px;
+          line-height: 1.6;
+      }
+      strong {
+          color: #000000;
+      }
+      .btn {
+          display: inline-block;
+          background-color: #007BFF;
+          color: #ffffff;
+          text-decoration: none;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-size: 16px;
+          margin-top: 20px;
+      }
+      .footer {
+          background-color: #f8f9fa;
+          padding: 15px;
+          text-align: center;
+          font-size: 14px;
+          color: #777777;
+          margin-top: 20px;
+          border-radius: 0 0 8px 8px;
+      }
+  </style>
+</head>
+<body>
+
+<table class="container">
+  <tr>
+    <td>
+      <h1>Hello <%= @user.first_name %>,</h1>
+      <p>
+        A new property has been added in <strong><%= @property.city %>, <%= @property.country %></strong>
+      </p>
+      <p>
+        <%= @property.description %>
+      </p>
+      <p>
+        <strong>Price:</strong> <%= @property.price %> per night
+      </p>
+      <p>
+        <strong>Check-in:</strong> <%= @property.start_date %><br>
+        <strong>Check-out:</strong> <%= @property.end_date %>
+      </p>
+      <p>
+<!--        <a href="http://localhost:5173/property/<%#= @property.city %>/<%#= @property.id %>/<%#= @property.owner.first_name %>/<%#= @property.user_id %>" class="btn">View Property</a>-->
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td class="footer">
+      If you have any questions, feel free to contact us at
+      <a href="mailto:support@mano.com" style="color: #007BFF; text-decoration: none;">support@mano.com</a>.
+    </td>
+  </tr>
+</table>
+
+</body>
+</html>

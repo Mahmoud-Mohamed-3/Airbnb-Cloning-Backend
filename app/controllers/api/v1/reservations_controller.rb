@@ -61,15 +61,23 @@ module Api
       end
 
       def send_reservation_email_to_owner(owner, reservation)
-        OwnerMailer.with(owner: owner, reservation: reservation).new_reservation.deliver_now
+        @owner = owner.to_json
+        @reservation = reservation.to_json
+        # OwnerMailer.with(owner: owner, reservation: @reservation).new_reservation.deliver_now
+        SendReservationEmailsJob.perform_async(@owner, @reservation)
       end
 
       def send_reservation_email_to_guest(guest, reservation)
-        GuestMailer.with(guest: guest, reservation: reservation).reservation_request.deliver_now
+        @guest = guest.to_json
+        @reservation = reservation.to_json
+        SendReservationMailToGuestJob.perform_async(@guest, @reservation)
       end
 
       def send_status_email_to_guest(guest, reservation)
-        GuestMailer.with(guest: guest, reservation: reservation).reservation_status.deliver_now
+        @guest = guest.to_json
+        @reservation = reservation.to_json
+        SendStatusMailToGuestJob.perform_async(@guest, @reservation)
+        # GuestMailer.with(guest: guest, reservation: reservation).reservation_status.deliver_now
       end
 
       def render_not_found(message)

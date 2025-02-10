@@ -42,7 +42,9 @@ class User < ApplicationRecord
       }
     end
   end
-
+  def simple_job
+    puts "simple job"
+  end
   def user_reviews
     reviews.map { |review| review.property }
   end

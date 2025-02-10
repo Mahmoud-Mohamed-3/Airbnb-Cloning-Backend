@@ -21,6 +21,12 @@ class Api::V1::PropertiesController < ApplicationController
     @property.owner = current_user.first_name
 
     if @property.save
+      @other_users = User.where.not(id: current_user.id)
+      @other_users.each do |user|
+        @sent_user= user.to_json
+        @target_property = @property.to_json
+        SendPropertiesUpdatesToUsersJob.perform_async(@sent_user, @target_property)
+      end
       render json: @property, serializer: PropertySerializer, status: :created
     else
       render json: @property.errors, status: :unprocessable_entity

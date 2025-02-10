@@ -7,6 +7,7 @@ class Api::V1::UsersController < ApplicationController
       render json: { message: "User not found" }, status: :not_found
     end
   end
+
   def show_user_info
     authenticate_user!
     if current_user.id != params[:id].to_i

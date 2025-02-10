@@ -34,7 +34,9 @@ class Users::PasswordsController < Devise::PasswordsController
   def create
     @user = User.find_by(email: params[:user][:email])
     if @user.present?
-      @user.send_reset_password_instructions
+
+      # @user.send_reset_password_instructions
+      ResetPasswordMailJob.perform_async(@user.to_json)
       render json: { message: "Reset Password instructions sent to your email", status: "ok" }
     else
       render json: { status: "error", error: "User not found" }

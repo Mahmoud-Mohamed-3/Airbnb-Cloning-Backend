@@ -300,6 +300,10 @@ GEM
     rake (13.2.1)
     rdoc (6.11.0)
       psych (>= 4.0.0)
+    redis (5.3.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.23.2)
+      connection_pool
     regexp_parser (2.10.0)
     reline (0.6.0)
       io-console (~> 0.5)
@@ -336,6 +340,12 @@ GEM
       rubocop-rails
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
+    sidekiq (7.3.8)
+      base64
+      connection_pool (>= 2.3.0)
+      logger
+      rack (>= 2.2.4)
+      redis-client (>= 0.22.2)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -419,7 +429,9 @@ DEPENDENCIES
   rack-attack
   rack-cors
   rails (~> 8.0.1)
+  redis
   rubocop-rails-omakase
+  sidekiq
   solid_cable
   solid_cache
   solid_queue
