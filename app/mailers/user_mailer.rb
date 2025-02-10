@@ -4,6 +4,7 @@ class UserMailer < ApplicationMailer
   def send_updates
     @user = params[:user]
     @property = params[:property]
+    @owner = params[:owner]
     mail(to: @user.email, subject: "New Property Added")
   end
 end

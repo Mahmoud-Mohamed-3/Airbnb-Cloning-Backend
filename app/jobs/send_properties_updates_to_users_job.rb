@@ -7,6 +7,8 @@ class SendPropertiesUpdatesToUsersJob
     user = User.find(user["id"])
     properties = JSON.parse(args[1])
     target_properties = Property.find(properties["id"])
-    UserMailer.with(user: user, property: target_properties).send_updates.deliver_now
+    property_owner = target_properties.user_id
+    target_property_owner = User.find(property_owner)
+    UserMailer.with(user: user, property: target_properties , owner: target_property_owner).send_updates.deliver_now
   end
 end

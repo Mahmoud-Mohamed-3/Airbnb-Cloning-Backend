@@ -17,12 +17,20 @@
           border: 1px solid #dddddd;
           padding: 20px;
           border-radius: 8px;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+          background-color: #007BFF;
+          color: #ffffff;
+          padding: 15px;
+          text-align: center;
+          font-size: 20px;
+          border-radius: 8px 8px 0 0;
       }
       h1 {
           color: #333333;
-          font-size: 24px;
-          margin-bottom: 20px;
+          font-size: 22px;
+          margin-bottom: 15px;
       }
       p {
           color: #555555;
@@ -37,10 +45,15 @@
           background-color: #007BFF;
           color: #ffffff;
           text-decoration: none;
-          padding: 10px 20px;
-          border-radius: 5px;
+          padding: 12px 20px;
+          border-radius: 6px;
           font-size: 16px;
+          font-weight: bold;
           margin-top: 20px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      }
+      .btn:hover {
+          background-color: #0056b3;
       }
       .footer {
           background-color: #f8f9fa;
@@ -51,13 +64,23 @@
           margin-top: 20px;
           border-radius: 0 0 8px 8px;
       }
+      .footer a {
+          color: #007BFF;
+          text-decoration: none;
+          font-weight: bold;
+      }
   </style>
 </head>
 <body>
 
 <table class="container">
   <tr>
-    <td>
+    <td class="header">
+      ✨ New Property Alert! ✨
+    </td>
+  </tr>
+  <tr>
+    <td style="padding: 20px;">
       <h1>Hello <%= @user.first_name %>,</h1>
       <p>
         A new property has been added in <strong><%= @property.city %>, <%= @property.country %></strong>
@@ -72,15 +95,17 @@
         <strong>Check-in:</strong> <%= @property.start_date %><br>
         <strong>Check-out:</strong> <%= @property.end_date %>
       </p>
-      <p>
-<!--        <a href="http://localhost:5173/property/<%#= @property.city %>/<%#= @property.id %>/<%#= @property.owner.first_name %>/<%#= @property.user_id %>" class="btn">View Property</a>-->
+      <p style="text-align: center;">
+        <a href="http://localhost:5173/property/<%= @property.city %>/<%= @property.id %>/<%= @owner.first_name %>/<%= @property.user_id %>" class="btn">
+          🔍 View Property
+        </a>
       </p>
     </td>
   </tr>
   <tr>
     <td class="footer">
-      If you have any questions, feel free to contact us at
-      <a href="mailto:support@mano.com" style="color: #007BFF; text-decoration: none;">support@mano.com</a>.
+      If you have any questions, contact us at
+      <a href="mailto:support@mano.com">support@mano.com</a>.
     </td>
   </tr>
 </table>

@@ -34,11 +34,9 @@ class Api::V1::PropertiesController < ApplicationController
   end
   def destroy
     property = Property.find(params[:id])
-    if property.destroy
-      render json: { message: "Property deleted successfully" }
-    else
-      render json: { message: "Property could not be deleted" }, status: :unprocessable_entity
-    end
+    prop = property.to_json
+    RemovePropertyJob.perform_async(prop)
+
   end
 
   def update
